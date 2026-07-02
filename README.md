@@ -30,7 +30,7 @@ On Windows, use `gradlew.bat` instead of `./gradlew`.
 |---|---|
 | Mod ID | `gtbwcore` |
 | Minecraft | 1.21.1 |
-| Loader | NeoForge 21.1.x |
+| Loader | NeoForge 21.1.234 |
 | Java | 21 |
 
 ## License
