@@ -1,0 +1,15 @@
+# Disable autocrlf on generated files, they always generate with LF
+# Add any extra files or paths here to make git stop saying they
+# are changed when only line endings change.
+src/generated/**/.cache/* text eol=lf
+src/generated/**/*.json text eol=lf
+
+# The Gradle wrapper script and shell scripts must keep LF endings,
+# otherwise they break when run on Linux (including CI).
+gradlew text eol=lf
+*.sh text eol=lf
+# Windows batch files should keep CRLF.
+gradlew.bat text eol=crlf
+*.bat text eol=crlf
+# Treat the wrapper jar as binary.
+*.jar binary
