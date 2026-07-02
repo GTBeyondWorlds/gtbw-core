@@ -36,6 +36,7 @@ bin/
 .claude/
 CLAUDE.md
 .mcp.json
+graphify-out/
 
 ### Minecraft Modding ###
 run/
