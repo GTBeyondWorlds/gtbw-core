@@ -1,0 +1,4 @@
+# Code owners for gtbw-core.
+# The Core Dev team is automatically requested for review on all pull requests.
+# See: https://docs.github.com/articles/about-code-owners
+* @GTBeyondWorlds/core-dev
