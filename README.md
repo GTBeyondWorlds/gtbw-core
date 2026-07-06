@@ -2,9 +2,11 @@
 
 Core mod for **GT Beyond Worlds**.
 
-A [NeoForge](https://neoforged.net/) mod for **Minecraft 1.21.1**. This is an
-early scaffold — it currently adds no content and only confirms that the mod
-loads. Features will be added over time.
+A [NeoForge](https://neoforged.net/) mod for **Minecraft 1.21.1**. Early days:
+so far it adds base metal resources (copper, bronze, tin, steel) and the first
+two multiblock structures (Coke Oven, Bricked Blast Furnace). See
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the project is organized
+and how to add content.
 
 ## Requirements
 
@@ -20,9 +22,16 @@ Run from the project root:
 
 # Build the mod jar (output in build/libs/)
 ./gradlew build
+
+# Regenerate JSON assets/data after changing datagen providers
+./gradlew runData
 ```
 
 On Windows, use `gradlew.bat` instead of `./gradlew`.
+
+Models, blockstates, loot tables, tags, recipes, and lang files are generated
+by `runData` into `src/generated/resources` (committed). Don't hand-edit them —
+change the providers in the `datagen` package and re-run.
 
 ## Project details
 
