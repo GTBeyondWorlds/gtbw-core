@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "gtbwcore:tin_dust"
+  },
+  "result": {
+    "id": "gtbwcore:tin_ingot"
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}
