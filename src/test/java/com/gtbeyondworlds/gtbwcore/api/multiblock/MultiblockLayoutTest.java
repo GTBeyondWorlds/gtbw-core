@@ -2,35 +2,20 @@ package com.gtbeyondworlds.gtbwcore.api.multiblock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import com.gtbeyondworlds.gtbwcore.content.machine.blastfurnace.BrickedBlastFurnaceLayout;
+import com.gtbeyondworlds.gtbwcore.content.machine.cokeoven.CokeOvenLayout;
+
 class MultiblockLayoutTest {
-
-    /** 3x3x3 hollow cube, controller centered on the front face, second layer. */
-    private static MultiblockLayout cokeOvenLayout() {
-        return MultiblockLayout.builder('C')
-                .layer("BBB", "BBB", "BBB")
-                .layer("BCB", "B B", "BBB")
-                .layer("BBB", "BBB", "BBB")
-                .build();
-    }
-
-    /** 3x3 solid base, 3 hollow ring layers above, controller front-center on layer 2. */
-    private static MultiblockLayout blastFurnaceLayout() {
-        return MultiblockLayout.builder('C')
-                .layer("BBB", "BBB", "BBB")
-                .layer("BCB", "B B", "BBB")
-                .layer("BBB", "B B", "BBB")
-                .layer("BBB", "B B", "BBB")
-                .build();
-    }
 
     @Test
     void cokeOvenLayoutHas25BricksAndOneAirCell() {
-        Map<RelativePos, Character> cells = cokeOvenLayout().cells();
+        Map<RelativePos, Character> cells = CokeOvenLayout.LAYOUT.cells();
         assertEquals(26, cells.size()); // 27 cells minus the controller
         assertEquals(25, cells.values().stream().filter(c -> c == 'B').count());
         assertEquals(1, cells.values().stream().filter(c -> c == ' ').count());
@@ -39,16 +24,30 @@ class MultiblockLayoutTest {
     }
 
     @Test
-    void blastFurnaceLayoutHas32BricksAndHollowColumn() {
-        Map<RelativePos, Character> cells = blastFurnaceLayout().cells();
-        assertEquals(35, cells.size()); // 36 cells minus the controller
-        assertEquals(32, cells.values().stream().filter(c -> c == 'B').count());
-        assertEquals(3, cells.values().stream().filter(c -> c == ' ').count());
+    void blastFurnaceLayoutHas40BricksAndHollowColumn() {
+        Map<RelativePos, Character> cells = BrickedBlastFurnaceLayout.LAYOUT.cells();
+        assertEquals(44, cells.size()); // 45 cells minus the controller
+        assertEquals(40, cells.values().stream().filter(c -> c == 'B').count());
+        assertEquals(4, cells.values().stream().filter(c -> c == ' ').count());
         assertEquals(' ', cells.get(new RelativePos(0, 0, 1)));
         assertEquals(' ', cells.get(new RelativePos(0, 1, 1)));
         assertEquals(' ', cells.get(new RelativePos(0, 2, 1)));
+        assertEquals(' ', cells.get(new RelativePos(0, 3, 1)));
         // Base directly below the hollow column is solid.
         assertEquals('B', cells.get(new RelativePos(0, -1, 1)));
+    }
+
+    @Test
+    void layoutsStayWithinControllerScanRadius() {
+        // MultiblockControllerBlock.PART_SCAN_RADIUS is 3: parts further from
+        // the controller than that would never notify it, so structures would
+        // stop forming/un-forming promptly. Bump the radius if this fails.
+        for (MultiblockLayout layout : java.util.List.of(CokeOvenLayout.LAYOUT, BrickedBlastFurnaceLayout.LAYOUT)) {
+            for (RelativePos pos : layout.cells().keySet()) {
+                int distance = Math.max(Math.abs(pos.right()), Math.max(Math.abs(pos.up()), Math.abs(pos.back())));
+                assertTrue(distance <= 3, "cell " + pos + " is outside the controller scan radius");
+            }
+        }
     }
 
     @Test
