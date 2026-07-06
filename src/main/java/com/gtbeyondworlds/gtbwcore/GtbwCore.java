@@ -3,6 +3,8 @@ package com.gtbeyondworlds.gtbwcore;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
+import com.gtbeyondworlds.gtbwcore.item.ModCreativeTabs;
+import com.gtbeyondworlds.gtbwcore.item.ModItems;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -12,8 +14,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 /**
  * Main entrypoint for GTBW Core.
  *
- * <p>This is intentionally empty for now — it registers no content and only
- * confirms the mod loads. Features will be added later.
+ * <p>Registers the mod's content (items, creative tabs) against the mod event bus.
  */
 @Mod(GtbwCore.MODID)
 public class GtbwCore {
@@ -25,6 +26,9 @@ public class GtbwCore {
 
     // FML recognizes parameter types like IEventBus and ModContainer and injects them automatically.
     public GtbwCore(IEventBus modEventBus, ModContainer modContainer) {
+        ModItems.register(modEventBus);
+        ModCreativeTabs.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
     }
 
