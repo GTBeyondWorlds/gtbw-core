@@ -23,11 +23,19 @@ sourceSets.main.resources {
 
     // Exclude common development only resources from finalized outputs
     exclude("**/*.bbmodel") // BlockBench project files
-    exclude("src/generated/**/.cache") // datagen cache files
+    // Datagen cache; the pattern is relative to each source root, not the project root.
+    exclude(".cache")
+}
+
+tasks.named('jar', Jar).configure {
+    // Data generators only run during runData; keep them out of the shipped jar.
+    exclude('com/gtbeyondworlds/gtbwcore/datagen/**')
 }
 
 repositories {
-    // Add here additional repositories if required by some of the dependencies below.
+    // NeoForge/Minecraft repositories are added by the ModDevGradle plugin.
+    // Maven Central is needed for plain-JVM test dependencies (JUnit).
+    mavenCentral()
 }
 
 base {
@@ -136,9 +144,19 @@ dependencies {
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
 
+    // Plain JUnit 5 for the pure-logic tests in src/test/java. These tests must not
+    // touch Minecraft classes; anything needing a running game belongs in GameTests.
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+tasks.named('test', Test).configure {
+    useJUnitPlatform()
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

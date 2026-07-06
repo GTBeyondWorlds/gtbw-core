@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gtbwcore:block/coke_oven_bricks"
+  }
+}
