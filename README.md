@@ -42,6 +42,11 @@ change the providers in the `datagen` package and re-run.
 | Loader | NeoForge 21.1.234 |
 | Java | 21 |
 
+## Contributing
+
+Branch off `main`, open a pull request, get one review — see
+[CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
+
 ## License
 
 All Rights Reserved. See [LICENSE](LICENSE).
