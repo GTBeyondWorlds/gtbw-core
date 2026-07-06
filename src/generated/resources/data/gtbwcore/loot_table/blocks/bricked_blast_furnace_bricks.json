@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gtbwcore:bricked_blast_furnace_pieces"
+          "name": "gtbwcore:bricked_blast_furnace_bricks"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "gtbwcore:blocks/bricked_blast_furnace_pieces"
+  "random_sequence": "gtbwcore:blocks/bricked_blast_furnace_bricks"
 }

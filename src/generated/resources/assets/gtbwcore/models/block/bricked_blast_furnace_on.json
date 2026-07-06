@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "front": "gtbwcore:block/bricked_blast_furnace_front_on",
-    "side": "gtbwcore:block/bricked_blast_furnace_pieces",
-    "top": "gtbwcore:block/bricked_blast_furnace_pieces"
+    "side": "gtbwcore:block/bricked_blast_furnace_bricks",
+    "top": "gtbwcore:block/bricked_blast_furnace_bricks"
   }
 }

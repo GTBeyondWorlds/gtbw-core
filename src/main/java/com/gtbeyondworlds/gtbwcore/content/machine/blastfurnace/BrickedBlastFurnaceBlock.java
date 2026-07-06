@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.util.Lazy;
 
 /**
  * Bricked Blast Furnace controller: 3x3 footprint, 4 blocks high, solid base,
- * hollow center column above it (open at the top like a chimney). 32 pieces +
+ * hollow center column above it (open at the top like a chimney). 32 bricks +
  * this controller, which sits centered on the front face, second layer.
  */
 public class BrickedBlastFurnaceBlock extends MultiblockControllerBlock {
@@ -23,9 +23,9 @@ public class BrickedBlastFurnaceBlock extends MultiblockControllerBlock {
             .layer("BBB", "B B", "BBB")
             .build();
 
-    // Lazy: the pieces block cannot be resolved until registration has run.
+    // Lazy: the brick block cannot be resolved until registration has run.
     private static final Lazy<MultiblockPattern> PATTERN = Lazy.of(() -> MultiblockPattern.of(LAYOUT)
-            .where('B', ModBlocks.BRICKED_BLAST_FURNACE_PIECES)
+            .where('B', ModBlocks.BRICKED_BLAST_FURNACE_BRICKS)
             .build());
 
     public BrickedBlastFurnaceBlock(Properties properties) {

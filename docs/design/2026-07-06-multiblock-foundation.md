@@ -47,13 +47,17 @@ Pure geometry core (no Minecraft imports, unit-tested) + thin integration:
   the machine. Exactly one controller character anchors the pattern; spaces
   mean "must be air" (hollow interiors are enforced, not ignored).
 - The controller block carries `FACING` (set on placement, pointing at the
-  placer) and `FORMED`. Right-click validates: on success the controller
-  reports "<name> formed!" and lights its front; on failure it reports the
-  first wrong position and what belongs there.
-- A formed controller re-validates on neighbor changes and via a 20-tick
-  scheduled tick, so breaking any structure block un-forms it within a
-  second. Event-driven invalidation is deferred until machine counts make the
-  polling cost real.
+  placer) and `FORMED`. Formation is automatic and event-driven: structure
+  blocks extend `MultiblockPartBlock`, whose place/remove callbacks ping every
+  controller within scan radius; the controller then re-checks and flips
+  `FORMED` to match reality. Completing the build forms the machine and
+  lights its front; breaking any part un-forms it on the next tick. A slow
+  polling heartbeat (20 ticks formed / 40 unformed) catches changes that
+  produce no callback in either direction (e.g. a foreign block placed into —
+  or removed from — a must-be-air cell away from the controller).
+- Right-click never changes anything; it reports status — on success
+  "<name> is formed.", on failure the first wrong position and what belongs
+  there.
 - No block entities yet — controllers are stateless until processing logic
   arrives (see roadmap in ARCHITECTURE.md).
 
@@ -72,8 +76,9 @@ layer 2   BCB B.B BBB      (C = controller, front row; . = air)
 layer 1   BBB BBB BBB      (bottom)
 ```
 
-**Bricked Blast Furnace** — 3x3 footprint, 4 high, solid base, hollow center
-column above it (open chimney): 32 pieces + controller = 33 blocks.
+**Bricked Blast Furnace** — 3x3 footprint, 4 high, solid base of Bricked Blast
+Furnace Bricks, hollow center column above it (open chimney): 32 bricks +
+controller = 33 blocks.
 
 ```
 layer 4   BBB B.B BBB      (top)

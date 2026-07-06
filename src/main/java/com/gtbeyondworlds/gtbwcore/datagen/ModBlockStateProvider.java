@@ -20,12 +20,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlockWithItem(ModBlocks.COKE_OVEN_BRICKS.get(), cubeAll(ModBlocks.COKE_OVEN_BRICKS.get()));
-        simpleBlockWithItem(ModBlocks.BRICKED_BLAST_FURNACE_PIECES.get(),
-                cubeAll(ModBlocks.BRICKED_BLAST_FURNACE_PIECES.get()));
+        simpleBlockWithItem(ModBlocks.BRICKED_BLAST_FURNACE_BRICKS.get(),
+                cubeAll(ModBlocks.BRICKED_BLAST_FURNACE_BRICKS.get()));
 
         controllerBlock(ModBlocks.COKE_OVEN.get(), "coke_oven", "coke_oven_bricks");
         controllerBlock(ModBlocks.BRICKED_BLAST_FURNACE.get(), "bricked_blast_furnace",
-                "bricked_blast_furnace_pieces");
+                "bricked_blast_furnace_bricks");
     }
 
     /**

@@ -3,6 +3,7 @@ package com.gtbeyondworlds.gtbwcore.registry;
 import java.util.function.Function;
 
 import com.gtbeyondworlds.gtbwcore.GtbwCore;
+import com.gtbeyondworlds.gtbwcore.api.multiblock.MultiblockPartBlock;
 import com.gtbeyondworlds.gtbwcore.content.machine.blastfurnace.BrickedBlastFurnaceBlock;
 import com.gtbeyondworlds.gtbwcore.content.machine.cokeoven.CokeOvenBlock;
 
@@ -23,11 +24,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(GtbwCore.MODID);
 
-    // Structure blocks
-    public static final DeferredBlock<Block> COKE_OVEN_BRICKS =
-            registerWithItem("coke_oven_bricks", Block::new, structureProperties(MapColor.TERRACOTTA_BROWN));
-    public static final DeferredBlock<Block> BRICKED_BLAST_FURNACE_PIECES =
-            registerWithItem("bricked_blast_furnace_pieces", Block::new, structureProperties(MapColor.TERRACOTTA_ORANGE));
+    // Structure blocks; parts ping nearby controllers so structures form and
+    // un-form automatically when they are placed or broken.
+    public static final DeferredBlock<MultiblockPartBlock> COKE_OVEN_BRICKS =
+            registerWithItem("coke_oven_bricks", MultiblockPartBlock::new, structureProperties(MapColor.TERRACOTTA_BROWN));
+    public static final DeferredBlock<MultiblockPartBlock> BRICKED_BLAST_FURNACE_BRICKS =
+            registerWithItem("bricked_blast_furnace_bricks", MultiblockPartBlock::new, structureProperties(MapColor.TERRACOTTA_ORANGE));
 
     // Multiblock controllers
     public static final DeferredBlock<CokeOvenBlock> COKE_OVEN =

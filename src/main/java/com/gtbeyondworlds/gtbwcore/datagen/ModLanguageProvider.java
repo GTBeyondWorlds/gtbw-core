@@ -28,10 +28,10 @@ public class ModLanguageProvider extends LanguageProvider {
 
         addBlock(ModBlocks.COKE_OVEN_BRICKS, "Coke Oven Bricks");
         addBlock(ModBlocks.COKE_OVEN, "Coke Oven");
-        addBlock(ModBlocks.BRICKED_BLAST_FURNACE_PIECES, "Bricked Blast Furnace Pieces");
+        addBlock(ModBlocks.BRICKED_BLAST_FURNACE_BRICKS, "Bricked Blast Furnace Bricks");
         addBlock(ModBlocks.BRICKED_BLAST_FURNACE, "Bricked Blast Furnace");
 
-        add("gtbwcore.multiblock.formed", "%s formed!");
+        add("gtbwcore.multiblock.formed", "%s is formed.");
         add("gtbwcore.multiblock.incomplete", "Multiblock incomplete: expected %s at (%s, %s, %s)");
     }
 }

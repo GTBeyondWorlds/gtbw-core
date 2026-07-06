@@ -1,9 +1,9 @@
 {
   "block.gtbwcore.bricked_blast_furnace": "Bricked Blast Furnace",
-  "block.gtbwcore.bricked_blast_furnace_pieces": "Bricked Blast Furnace Pieces",
+  "block.gtbwcore.bricked_blast_furnace_bricks": "Bricked Blast Furnace Bricks",
   "block.gtbwcore.coke_oven": "Coke Oven",
   "block.gtbwcore.coke_oven_bricks": "Coke Oven Bricks",
-  "gtbwcore.multiblock.formed": "%s formed!",
+  "gtbwcore.multiblock.formed": "%s is formed.",
   "gtbwcore.multiblock.incomplete": "Multiblock incomplete: expected %s at (%s, %s, %s)",
   "item.gtbwcore.bronze_dust": "Bronze Dust",
   "item.gtbwcore.bronze_ingot": "Bronze Ingot",

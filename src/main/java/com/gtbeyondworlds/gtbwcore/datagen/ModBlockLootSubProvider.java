@@ -20,7 +20,7 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
     protected void generate() {
         dropSelf(ModBlocks.COKE_OVEN_BRICKS.get());
         dropSelf(ModBlocks.COKE_OVEN.get());
-        dropSelf(ModBlocks.BRICKED_BLAST_FURNACE_PIECES.get());
+        dropSelf(ModBlocks.BRICKED_BLAST_FURNACE_BRICKS.get());
         dropSelf(ModBlocks.BRICKED_BLAST_FURNACE.get());
     }
 

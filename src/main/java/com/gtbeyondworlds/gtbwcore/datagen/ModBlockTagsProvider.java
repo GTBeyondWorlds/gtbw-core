@@ -24,7 +24,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 ModBlocks.COKE_OVEN_BRICKS.get(),
                 ModBlocks.COKE_OVEN.get(),
-                ModBlocks.BRICKED_BLAST_FURNACE_PIECES.get(),
+                ModBlocks.BRICKED_BLAST_FURNACE_BRICKS.get(),
                 ModBlocks.BRICKED_BLAST_FURNACE.get());
     }
 }

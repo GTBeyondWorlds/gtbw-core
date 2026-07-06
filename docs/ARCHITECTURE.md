@@ -17,6 +17,7 @@ All code lives under `com.gtbeyondworlds.gtbwcore`:
 | `registry/`| The central `DeferredRegister` holders: `ModBlocks`, `ModItems`, `ModCreativeTabs` (later `ModBlockEntities`, `ModMenus`, …). Content classes are instantiated here but defined in `content/`. |
 | `client/`  | Client-only code (renderers, screens). Nothing outside this package may reference client-only Minecraft classes. Empty so far. |
 | `datagen/` | Data generators. Runs only during `gradlew runData`, never ships in the jar. |
+| `integration/` | Reserved: one subpackage per external mod we integrate with (JEI/EMI, Jade, …), so optional compat stays out of core code paths. Not created until the first integration lands. |
 
 Dependency direction: `datagen` → `content`/`registry` → `api`. Never the
 reverse.
@@ -35,6 +36,11 @@ reverse.
   will move to a material registry that generates the item registrations from
   a single material definition. Do not hand-register the fifth dust; build the
   material system instead.
+- When machine counts grow past a handful, registration entries move out of
+  the central `ModBlocks`/`ModItems` into per-feature holder classes in each
+  `content` package (the pattern GregTech-family mods use: a `CokeOvenMachines`
+  style holder per feature, aggregated at startup), with `registry/` keeping
+  only the `DeferredRegister`s themselves.
 
 ## Assets and data: generated, not hand-written
 
@@ -68,15 +74,19 @@ geometry is unit-testable without booting the game:
 - `MultiblockPattern` — binds layout characters to `BlockState` predicates and
   matches the pattern against a level, reporting the first mismatching
   position and what was expected there.
-- `MultiblockControllerBlock` — base class for controller blocks. Right-click
-  validates the structure and toggles the `formed` blockstate property;
-  a formed controller re-validates on neighbor changes and via a slow
-  scheduled tick so broken structures un-form.
+- `MultiblockPartBlock` — base class for structure blocks. Placing or
+  removing one pings nearby controllers, which is what makes formation
+  event-driven.
+- `MultiblockControllerBlock` — base class for controller blocks. Structures
+  form and un-form automatically: any part change, neighbor change, or
+  controller placement schedules a check that flips the `formed` blockstate
+  property to match reality, and a slow polling heartbeat (20 ticks formed /
+  40 unformed) catches changes with no callback (e.g. a foreign block pushed
+  into a must-be-air cell). Right-click only reports status — what is missing
+  and where.
 
 Controllers get block entities the moment they gain inventories or recipe
-logic; until then they stay stateless. Event-driven structure invalidation
-(instead of the scheduled re-check) becomes worthwhile once multiblock counts
-are large; the API surface will not change when that lands.
+logic; until then they stay stateless.
 
 ## Testing
 

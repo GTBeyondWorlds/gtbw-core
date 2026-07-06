@@ -39,7 +39,7 @@ class MultiblockLayoutTest {
     }
 
     @Test
-    void blastFurnaceLayoutHas32PiecesAndHollowColumn() {
+    void blastFurnaceLayoutHas32BricksAndHollowColumn() {
         Map<RelativePos, Character> cells = blastFurnaceLayout().cells();
         assertEquals(35, cells.size()); // 36 cells minus the controller
         assertEquals(32, cells.values().stream().filter(c -> c == 'B').count());
