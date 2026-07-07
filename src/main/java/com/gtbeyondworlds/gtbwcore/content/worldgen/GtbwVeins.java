@@ -18,6 +18,7 @@ public final class GtbwVeins {
 
     public static final VeinDefinition CASSITERITE = VeinRegistry.register(
             VeinDefinition.builder("cassiterite")
+                    // ::get adapts DeferredBlock<DropExperienceBlock> to Supplier<Block> (generics are invariant); resolution stays lazy.
                     .ore(ModBlocks.TIN_ORE::get, ModBlocks.DEEPSLATE_TIN_ORE::get, 80)
                     .ore(() -> Blocks.COPPER_ORE, () -> Blocks.DEEPSLATE_COPPER_ORE, 20)
                     .richness(0.20f, 0.50f)

@@ -128,6 +128,6 @@ class VeinSelectionTest {
                 }
             }
         }
-        assertTrue(same < total, "two seeds must not produce identical layouts");
+        assertTrue(same < total / 2, "two seeds must not produce near-identical layouts");
     }
 }

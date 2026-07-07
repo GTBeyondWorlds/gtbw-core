@@ -19,7 +19,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 /**
  * Common (`c:`) item tags so other mods can find our materials: each material
- * gets its own `c:dusts/x` / `c:ingots/x` tag, folded into the parent tag.
+ * gets its own `c:dusts/x` / `c:ingots/x` / `c:raw_materials/x` tag folded
+ * into the parent tag, and block ore tags are mirrored into item form.
  */
 public class ModItemTagsProvider extends ItemTagsProvider {
 

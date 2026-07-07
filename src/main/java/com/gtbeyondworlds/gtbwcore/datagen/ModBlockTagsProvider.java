@@ -15,7 +15,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-/** Block tags; every block so far is brickwork mined with a pickaxe. */
+/** Block tags: everything is pickaxe-mined; ores additionally need stone tools and get {@code c:} ore tags. */
 public class ModBlockTagsProvider extends BlockTagsProvider {
 
     public ModBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,

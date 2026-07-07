@@ -45,7 +45,7 @@ cross-chunk writes, no race conditions with threaded chunk gen).
   horizontal radius capped at 96 blocks (region size / 4), veins in adjacent
   regions can at worst meet exactly at the border — non-overlap is a
   structural guarantee, not a runtime check. Neighbor spacing works out to
-  192 blocks minimum, ~384 typical, ~576+ max.
+  193 blocks minimum, ~384 typical, ~576+ max.
 
 ### Vein type definitions
 
@@ -87,9 +87,9 @@ prospecting-by-digging works before dedicated tools exist.
 All per-block decisions (ore-or-rock, which ore) use a positional hash of
 (instanceSeed, x, y, z) — the same idea as vanilla's positional random —
 never sequential draws, so neighboring chunks always agree about the vein
-they share. A mid-roll vein (radius 64,
-thickness 18) yields roughly 20k-55k ore blocks depending on the richness
-roll.
+they share. A mid-roll vein (radius 64, thickness 18) yields roughly
+10k-35k ore blocks depending on the richness roll; the largest, richest
+rolls approach 70k.
 
 ### Placement rules
 
