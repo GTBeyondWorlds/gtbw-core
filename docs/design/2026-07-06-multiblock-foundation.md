@@ -76,12 +76,13 @@ layer 2   BCB B.B BBB      (C = controller, front row; . = air)
 layer 1   BBB BBB BBB      (bottom)
 ```
 
-**Bricked Blast Furnace** — 3x3 footprint, 4 high, solid base of Bricked Blast
-Furnace Bricks, hollow center column above it (open chimney): 32 bricks +
-controller = 33 blocks.
+**Bricked Blast Furnace** — 3x3 footprint, 5 high, solid base of Bricked Blast
+Furnace Bricks, hollow center column above it (open chimney): 40 bricks +
+controller = 41 blocks.
 
 ```
-layer 4   BBB B.B BBB      (top)
+layer 5   BBB B.B BBB      (top)
+layer 4   BBB B.B BBB
 layer 3   BBB B.B BBB
 layer 2   BCB B.B BBB      (C = controller, front row)
 layer 1   BBB BBB BBB      (solid base)
