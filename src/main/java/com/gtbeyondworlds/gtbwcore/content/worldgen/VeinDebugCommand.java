@@ -175,14 +175,16 @@ public final class VeinDebugCommand {
 
     /** Discards every tagged marker in the level, including ones from saved worlds. */
     private static int removeMarkers(ServerLevel level) {
-        int removed = 0;
+        // Snapshot first: discarding while iterating getAllEntities() mutates
+        // the entity sections mid-iteration and the iterator yields nulls.
+        List<Entity> found = new ArrayList<>();
         for (Entity entity : level.getAllEntities()) {
-            if (entity.getTags().contains(MARKER_TAG)) {
-                entity.discard();
-                removed++;
+            if (entity != null && entity.getTags().contains(MARKER_TAG)) {
+                found.add(entity);
             }
         }
+        found.forEach(Entity::discard);
         MARKERS.removeIf(marker -> marker.dimension().equals(level.dimension()));
-        return removed;
+        return found.size();
     }
 }
