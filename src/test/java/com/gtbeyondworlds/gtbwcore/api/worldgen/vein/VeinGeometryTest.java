@@ -3,8 +3,6 @@ package com.gtbeyondworlds.gtbwcore.api.worldgen.vein;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 class VeinGeometryTest {
@@ -17,6 +15,18 @@ class VeinGeometryTest {
             .radius(48, 80)
             .thickness(12, 24)
             .spawnWeight(10)
+            .build();
+
+    // Tightest legal configuration: radius pinned to VeinType.MAX_CONFIG_RADIUS,
+    // giving the maximum possible wobbled reach (96 blocks) and the thinnest
+    // (1-block) margin against the adjacent-region center confinement.
+    private static final VeinType MAX_REACH_TYPE = VeinType.builder("max_reach")
+            .addOreWeight(1)
+            .richness(0.99f, 1.0f)
+            .yBand(-60, 60)
+            .radius(84, 84)
+            .thickness(24, 24)
+            .spawnWeight(1)
             .build();
 
     @Test
@@ -55,20 +65,35 @@ class VeinGeometryTest {
 
     @Test
     void adjacentRegionVeinsNeverOverlap() {
+        assertAdjacentRegionVeinsNeverOverlap(TYPE);
+    }
+
+    @Test
+    void adjacentRegionVeinsNeverOverlapAtMaxRadius() {
+        // Same guarantee, but at the tightest legal margin: radius pinned to
+        // MAX_CONFIG_RADIUS gives the largest possible wobbled reach (96
+        // blocks), leaving only a 1-block margin against the 193-block
+        // minimum center separation. An off-by-one in the center-confinement
+        // or ceil math would slip through the looser TYPE fixture but not
+        // this one.
+        assertAdjacentRegionVeinsNeverOverlap(MAX_REACH_TYPE);
+    }
+
+    private void assertAdjacentRegionVeinsNeverOverlap(VeinType type) {
         // The load-bearing guarantee. Sample many seeds; check the wobbled
         // reach boxes of veins in horizontally/vertically/diagonally adjacent
         // regions are strictly disjoint.
         for (long seed = 0; seed < 300; seed++) {
             for (int rx = -3; rx <= 3; rx++) {
                 for (int rz = -3; rz <= 3; rz++) {
-                    VeinInstance a = VeinMath.instance(seed, rx, rz, TYPE);
+                    VeinInstance a = VeinMath.instance(seed, rx, rz, type);
                     int ra = VeinMath.maxReachXZ(a);
                     for (int dx = -1; dx <= 1; dx++) {
                         for (int dz = -1; dz <= 1; dz++) {
                             if (dx == 0 && dz == 0) {
                                 continue;
                             }
-                            VeinInstance b = VeinMath.instance(seed, rx + dx, rz + dz, TYPE);
+                            VeinInstance b = VeinMath.instance(seed, rx + dx, rz + dz, type);
                             int rb = VeinMath.maxReachXZ(b);
                             boolean disjointX = a.centerX() + ra < b.centerX() - rb
                                     || b.centerX() + rb < a.centerX() - ra;
