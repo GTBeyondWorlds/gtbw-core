@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import com.gtbeyondworlds.gtbwcore.registry.ModBlocks;
 import com.gtbeyondworlds.gtbwcore.registry.ModCreativeTabs;
+import com.gtbeyondworlds.gtbwcore.registry.ModFeatures;
 import com.gtbeyondworlds.gtbwcore.registry.ModItems;
 
 import net.neoforged.bus.api.IEventBus;
@@ -33,6 +34,7 @@ public class GtbwCore {
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModFeatures.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
     }
