@@ -35,8 +35,12 @@ cross-chunk writes, no race conditions with threaded chunk gen).
   spawn weight; the highest score wins. Selection is independent of
   registration order, so adding a vein type later only reassigns the regions
   the new type wins — every other vein in an existing world stays put.
-- Instance rolls (center, radius, thickness, richness) come from
-  `WorldgenRandom.setLargeFeatureWithSalt(worldSeed, regionX, regionZ, salt)`.
+- Instance rolls (center, radius, thickness, richness) come from a mod-owned
+  splitmix64-seeded generator keyed by (worldSeed, regionX, regionZ, salt) —
+  the same recipe as vanilla's `setLargeFeatureWithSalt`, but owned by the mod
+  so vein layouts cannot shift if Minecraft changes its RNG internals, and so
+  the math core stays free of Minecraft classes (the unit-test rule in
+  `build.gradle`).
 - The center is confined to the central half of the region. With the max
   horizontal radius capped at 96 blocks (region size / 4), veins in adjacent
   regions can at worst meet exactly at the border — non-overlap is a
@@ -80,9 +84,10 @@ perfect eggs. Ore probability at a position is
 nothing at the fringe, so hitting the edge of a vein points you inward —
 prospecting-by-digging works before dedicated tools exist.
 
-All per-block decisions (ore-or-rock, which ore) use the positional random
-(`forkPositional().at(x, y, z)`), never sequential draws, so neighboring
-chunks always agree about the vein they share. A mid-roll vein (radius 64,
+All per-block decisions (ore-or-rock, which ore) use a positional hash of
+(instanceSeed, x, y, z) — the same idea as vanilla's positional random —
+never sequential draws, so neighboring chunks always agree about the vein
+they share. A mid-roll vein (radius 64,
 thickness 18) yields roughly 20k-55k ore blocks depending on the richness
 roll.
 
@@ -104,7 +109,7 @@ roll.
   feature, the `neoforge:add_features` biome modifier, and a
   `neoforge:remove_features` modifier that deletes vanilla scattered
   generation for covered ores only: copper (`ore_copper`, `ore_copper_large`),
-  iron (`ore_iron`, `ore_iron_middle`, `ore_iron_small`, `ore_iron_upper`),
+  iron (`ore_iron_upper`, `ore_iron_middle`, `ore_iron_small`),
   coal (`ore_coal_lower`, `ore_coal_upper`). Veins are THE source for those
   ores; uncovered ores (gold, redstone, ...) keep vanilla gen until they get
   veins.
