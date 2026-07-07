@@ -30,4 +30,8 @@ public class IngotProperty extends BWItemProperty {
     public String getPropertyId() {
         return BWPropertyKeys.INGOT_KEY;
     }
+
+    public ItemLike getIngotItem () {
+        return this.getItem(0);
+    }
 }

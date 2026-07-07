@@ -1,9 +1,6 @@
 package com.gtbeyondworlds.gtbwcore.common.material;
 
-import com.gtbeyondworlds.gtbwcore.common.material.properties.BWItemProperty;
-import com.gtbeyondworlds.gtbwcore.common.material.properties.BWMaterialProperty;
-import com.gtbeyondworlds.gtbwcore.common.material.properties.BWPropertyKeys;
-import com.gtbeyondworlds.gtbwcore.common.material.properties.DustProperty;
+import com.gtbeyondworlds.gtbwcore.common.material.properties.*;
 import com.gtbeyondworlds.gtbwcore.common.registry.IBWRegistryObject;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
@@ -66,34 +63,24 @@ public class BWMaterial implements IBWRegistryObject<BWMaterial> {
         return this.info.getTintColor();
     }
 
+    public @Nullable ItemLike getIngotItem() {
+        BWMaterialProperty prop = this.getProperty(BWPropertyKeys.INGOT_KEY);
+        return prop instanceof IngotProperty ingotProperty ? ingotProperty.getIngotItem() : null;
+    }
+
     public @Nullable ItemLike getDustItem() {
         BWMaterialProperty prop = this.getProperty(BWPropertyKeys.DUST_KEY);
-
-        if (prop instanceof DustProperty dustProperty) {
-            return dustProperty.getDustItem();
-        }
-
-        return null;
+        return prop instanceof DustProperty dustProperty ? dustProperty.getDustItem() : null;
     }
 
     public @Nullable ItemLike getSmallDustITem() {
         BWMaterialProperty prop = this.getProperty(BWPropertyKeys.DUST_KEY);
-
-        if (prop instanceof DustProperty dustProperty) {
-            return dustProperty.getSmallDustItem();
-        }
-
-        return null;
+        return prop instanceof DustProperty dustProperty ? dustProperty.getSmallDustItem() : null;
     }
 
     public @Nullable ItemLike getTinyDustItem() {
         BWMaterialProperty prop = this.getProperty(BWPropertyKeys.DUST_KEY);
-
-        if (prop instanceof DustProperty dustProperty) {
-            return dustProperty.getTinyDustItem();
-        }
-
-        return null;
+        return prop instanceof DustProperty dustProperty ? dustProperty.getTinyDustItem() : null;
     }
 
     @Override
