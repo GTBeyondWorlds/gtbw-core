@@ -1,7 +1,7 @@
 # Design: ore vein generation
 
 Date: 2026-07-07
-Status: approved; implementation follows in `feature/ore-vein-generation`
+Status: implemented in `feature/ore-vein-generation`
 
 ## Goals
 
