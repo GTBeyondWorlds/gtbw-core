@@ -27,6 +27,9 @@ public final class ModItems {
     public static final DeferredItem<Item> BRONZE_DUST = ITEMS.registerSimpleItem("bronze_dust");
     public static final DeferredItem<Item> STEEL_DUST = ITEMS.registerSimpleItem("steel_dust");
 
+    // Raw ore drops
+    public static final DeferredItem<Item> RAW_TIN = ITEMS.registerSimpleItem("raw_tin");
+
     private ModItems() {}
 
     public static void register(IEventBus modEventBus) {

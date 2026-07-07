@@ -26,6 +26,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         controllerBlock(ModBlocks.COKE_OVEN.get(), "coke_oven", "coke_oven_bricks");
         controllerBlock(ModBlocks.BRICKED_BLAST_FURNACE.get(), "bricked_blast_furnace",
                 "bricked_blast_furnace_bricks");
+
+        simpleBlockWithItem(ModBlocks.TIN_ORE.get(), cubeAll(ModBlocks.TIN_ORE.get()));
+        simpleBlockWithItem(ModBlocks.DEEPSLATE_TIN_ORE.get(), cubeAll(ModBlocks.DEEPSLATE_TIN_ORE.get()));
     }
 
     /**
