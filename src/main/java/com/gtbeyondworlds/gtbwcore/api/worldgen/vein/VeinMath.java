@@ -1,5 +1,6 @@
 package com.gtbeyondworlds.gtbwcore.api.worldgen.vein;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -149,6 +150,46 @@ public final class VeinMath {
             }
         }
         return type.oreCount() - 1; // unreachable; guards float edge cases
+    }
+
+    /**
+     * Samples the vein's boundary as {x, y, z} cells for debug visualization:
+     * grid cells inside the lens whose neighbor one step outward is outside.
+     * Uses the real wobbled distance, so the shell shows the actual lumpy
+     * lens. Deterministic; if more than {@code cap} cells qualify, the list
+     * is thinned evenly rather than truncated at one side.
+     */
+    public static List<int[]> boundaryShell(VeinInstance vein, int cap) {
+        int step = Math.max(2, Math.min(vein.radius() / 12, vein.thickness() / 3));
+        int reach = maxReachXZ(vein);
+        int vReach = maxReachY(vein);
+        List<int[]> cells = new ArrayList<>();
+        for (int x = vein.centerX() - reach; x <= vein.centerX() + reach; x += step) {
+            for (int z = vein.centerZ() - reach; z <= vein.centerZ() + reach; z += step) {
+                for (int y = vein.centerY() - vReach; y <= vein.centerY() + vReach; y += step) {
+                    if (normalizedDistance(vein, x, y, z) >= 1.0) {
+                        continue;
+                    }
+                    if (normalizedDistance(vein, x + step, y, z) >= 1.0
+                            || normalizedDistance(vein, x - step, y, z) >= 1.0
+                            || normalizedDistance(vein, x, y, z + step) >= 1.0
+                            || normalizedDistance(vein, x, y, z - step) >= 1.0
+                            || normalizedDistance(vein, x, y + step, z) >= 1.0
+                            || normalizedDistance(vein, x, y - step, z) >= 1.0) {
+                        cells.add(new int[] {x, y, z});
+                    }
+                }
+            }
+        }
+        if (cells.size() <= cap) {
+            return cells;
+        }
+        List<int[]> thinned = new ArrayList<>(cap);
+        double stride = cells.size() / (double) cap;
+        for (int i = 0; i < cap; i++) {
+            thinned.add(cells.get((int) (i * stride)));
+        }
+        return thinned;
     }
 
     /** Bounded roll k from an instance seed: uniform int in [0, bound). */

@@ -101,7 +101,8 @@ one-liner builders in `content/worldgen/GtbwVeins.java`; vanilla scattered
 generation is removed (via biome modifier) only for ores veins cover. Vein
 names are permanent world identity: renaming one reshuffles its regions.
 Details and caveats: `docs/design/2026-07-07-ore-vein-generation.md`.
-The op-only `/gtbwvein` command reports the current region's vein.
+The op-only `/gtbwvein` command reports the current region's vein;
+`/gtbwvein show`/`hide` outline its boundary with glowing markers.
 
 ## Testing
 

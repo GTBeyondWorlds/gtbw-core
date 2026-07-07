@@ -154,7 +154,10 @@ are indices into the definition):
 
 In-game: op-only `/gtbwvein` debug command reporting the current region's vein
 (type, center, richness, distance) — doubles as the seed of future
-prospecting tools — plus a fresh-world flyover.
+prospecting tools — plus a fresh-world flyover. `/gtbwvein show` outlines the
+vein's boundary shell with glowing markers visible through terrain (auto-clear
+after 60s, `/gtbwvein hide` to clear early), so vein size and shape can be
+judged without mining the deposit out.
 
 ## Out of scope (deliberately)
 
