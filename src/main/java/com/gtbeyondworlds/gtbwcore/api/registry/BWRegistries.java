@@ -66,14 +66,6 @@ public class BWRegistries {
         return newCustomRegistry(registryName, GtbwCore.MOD_ID, null);
     }
 
-    private static <T> BWRegistry<T> newCustomRegistry (String registryName, final Consumer<RegistryBuilder<T>> builder) {
-        return newCustomRegistry(registryName, GtbwCore.MOD_ID, builder);
-    }
-
-    private static <T> BWRegistry<T> newCustomRegistry (String registryName, String namespace) {
-        return newCustomRegistry(registryName, namespace, null);
-    }
-
     private static <T> BWRegistry<T> newCustomRegistry (String registryName, String namespace, @Nullable final Consumer<RegistryBuilder<T>> consumer) {
         ResourceLocation resource = ResourceLocation.fromNamespaceAndPath(namespace, registryName);
         ResourceKey<Registry<T>> registryKey = ResourceKey.createRegistryKey(resource);
