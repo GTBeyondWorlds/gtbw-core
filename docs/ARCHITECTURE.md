@@ -12,7 +12,7 @@ All code lives under `com.gtbeyondworlds.gtbwcore`:
 
 | Package    | Purpose |
 |------------|---------|
-| `api/`     | Reusable abstractions with no content in them. Code here may not depend on `content/` or `registry/`. Current: `api.multiblock` (structure patterns and the controller block base class). Future: materials, machine builders, energy. |
+| `api/`     | Reusable abstractions with no content in them. Code here may not depend on `content/` or `registry/`. Current: `api.multiblock` (structure patterns and the controller block base class) and `api.worldgen.vein` (deterministic ore vein engine). Future: materials, machine builders, energy. |
 | `content/` | Actual game content, sliced by feature (`content.machine.cokeoven`, `content.machine.blastfurnace`, …). A feature package owns everything specific to that feature. |
 | `registry/`| The central `DeferredRegister` holders: `ModBlocks`, `ModItems`, `ModCreativeTabs` (later `ModBlockEntities`, `ModMenus`, …). Content classes are instantiated here but defined in `content/`. |
 | `client/`  | Client-only code (renderers, screens). Nothing outside this package may reference client-only Minecraft classes. Empty so far. |
@@ -87,6 +87,22 @@ geometry is unit-testable without booting the game:
 
 Controllers get block entities the moment they gain inventories or recipe
 logic; until then they stay stateless.
+
+## Ore veins
+
+`api.worldgen.vein` generates all modded ore placement: the overworld is a
+grid of 24x24-chunk regions, each deterministically hosting one large vein
+(type via weighted rendezvous hashing on vein names, geometry/richness via
+mod-owned positional hashing — nothing is stored, every chunk recomputes
+identical results). `VeinType`/`VeinMath`/`VeinInstance` are Minecraft-free
+and unit-tested; `VeinDefinition`/`VeinRegistry`/`VeinFeature` bind ore
+indices to blocks and carve one chunk at a time. Veins are defined as
+one-liner builders in `content/worldgen/GtbwVeins.java`; vanilla scattered
+generation is removed (via biome modifier) only for ores veins cover. Vein
+names are permanent world identity: renaming one reshuffles its regions.
+Details and caveats: `docs/design/2026-07-07-ore-vein-generation.md`.
+The op-only `/gtbwvein` command reports the current region's vein;
+`/gtbwvein show`/`hide` outline its boundary with glowing markers.
 
 ## Testing
 

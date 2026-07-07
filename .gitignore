@@ -37,6 +37,7 @@ bin/
 CLAUDE.md
 .mcp.json
 graphify-out/
+docs/superpowers/
 
 ### Minecraft Modding ###
 run/
@@ -44,3 +45,4 @@ run/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
+.superpowers/

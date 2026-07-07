@@ -37,6 +37,18 @@ public class ModRecipeProvider extends RecipeProvider {
         dustSmelting(recipeOutput, ModItems.BRONZE_DUST.get(), ModItems.BRONZE_INGOT.get(), "bronze");
         // Steel needs the heat of a blast furnace; no regular smelting on purpose.
         dustBlasting(recipeOutput, ModItems.STEEL_DUST.get(), ModItems.STEEL_INGOT.get(), "steel");
+
+        // Raw tin smelts like vanilla raw ores; same numbers as the dusts.
+        SimpleCookingRecipeBuilder
+                .smelting(Ingredient.of(ModItems.RAW_TIN.get()), RecipeCategory.MISC,
+                        ModItems.TIN_INGOT.get(), SMELT_XP, SMELT_TICKS)
+                .unlockedBy("has_raw_tin", has(ModItems.RAW_TIN.get()))
+                .save(recipeOutput, id("tin_ingot_from_smelting_raw_tin"));
+        SimpleCookingRecipeBuilder
+                .blasting(Ingredient.of(ModItems.RAW_TIN.get()), RecipeCategory.MISC,
+                        ModItems.TIN_INGOT.get(), SMELT_XP, BLAST_TICKS)
+                .unlockedBy("has_raw_tin", has(ModItems.RAW_TIN.get()))
+                .save(recipeOutput, id("tin_ingot_from_blasting_raw_tin"));
     }
 
     /** Regular furnace + blast furnace for dusts that smelt at normal heat. */

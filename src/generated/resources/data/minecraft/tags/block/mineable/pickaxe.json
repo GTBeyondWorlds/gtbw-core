@@ -3,6 +3,8 @@
     "gtbwcore:coke_oven_bricks",
     "gtbwcore:coke_oven",
     "gtbwcore:bricked_blast_furnace_bricks",
-    "gtbwcore:bricked_blast_furnace"
+    "gtbwcore:bricked_blast_furnace",
+    "gtbwcore:tin_ore",
+    "gtbwcore:deepslate_tin_ore"
   ]
 }

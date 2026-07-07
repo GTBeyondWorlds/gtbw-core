@@ -3,13 +3,14 @@ package com.gtbeyondworlds.gtbwcore.datagen;
 import java.util.Set;
 
 import com.gtbeyondworlds.gtbwcore.registry.ModBlocks;
+import com.gtbeyondworlds.gtbwcore.registry.ModItems;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 
-/** Every block drops itself; nothing needs silk touch or fortune yet. */
+/** Block drops. Ores drop their raw item (fortune-aware, silk-touch aware); everything else drops itself. */
 public class ModBlockLootSubProvider extends BlockLootSubProvider {
 
     public ModBlockLootSubProvider(HolderLookup.Provider registries) {
@@ -22,6 +23,11 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.COKE_OVEN.get());
         dropSelf(ModBlocks.BRICKED_BLAST_FURNACE_BRICKS.get());
         dropSelf(ModBlocks.BRICKED_BLAST_FURNACE.get());
+
+        add(ModBlocks.TIN_ORE.get(),
+                block -> createOreDrop(block, ModItems.RAW_TIN.get()));
+        add(ModBlocks.DEEPSLATE_TIN_ORE.get(),
+                block -> createOreDrop(block, ModItems.RAW_TIN.get()));
     }
 
     @Override

@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -18,7 +19,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 /**
  * Common (`c:`) item tags so other mods can find our materials: each material
- * gets its own `c:dusts/x` / `c:ingots/x` tag, folded into the parent tag.
+ * gets its own `c:dusts/x` / `c:ingots/x` / `c:raw_materials/x` tag folded
+ * into the parent tag, and block ore tags are mirrored into item form.
  */
 public class ModItemTagsProvider extends ItemTagsProvider {
 
@@ -37,6 +39,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         materialTag(Tags.Items.INGOTS, "ingots/tin", ModItems.TIN_INGOT.get());
         materialTag(Tags.Items.INGOTS, "ingots/bronze", ModItems.BRONZE_INGOT.get());
         materialTag(Tags.Items.INGOTS, "ingots/steel", ModItems.STEEL_INGOT.get());
+
+        materialTag(Tags.Items.RAW_MATERIALS, "raw_materials/tin", ModItems.RAW_TIN.get());
+
+        copy(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "ores/tin")),
+                ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ores/tin")));
+        copy(Tags.Blocks.ORES, Tags.Items.ORES);
     }
 
     private void materialTag(TagKey<Item> parent, String path, Item item) {

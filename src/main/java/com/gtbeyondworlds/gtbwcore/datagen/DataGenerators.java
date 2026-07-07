@@ -40,5 +40,6 @@ public final class DataGenerators {
                 new ModItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(output, lookupProvider));
         generator.addProvider(event.includeServer(), new ModLootTableProvider(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModWorldgenProvider(output, lookupProvider));
     }
 }
