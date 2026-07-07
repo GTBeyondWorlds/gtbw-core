@@ -1,6 +1,7 @@
 package com.gtbeyondworlds.gtbwcore.api.registry;
 
 import com.gtbeyondworlds.gtbwcore.GtbwCore;
+import com.gtbeyondworlds.gtbwcore.api.item.BWCreativeModeTabs;
 import com.gtbeyondworlds.gtbwcore.api.material.BWMaterials;
 import com.gtbeyondworlds.gtbwcore.common.material.BWMaterial;
 import com.gtbeyondworlds.gtbwcore.common.registry.BWRegistry;
@@ -39,16 +40,11 @@ public class BWRegistries {
 
     static {
         BWMaterials.init();
+        BWCreativeModeTabs.init();
     }
 
     public static void init () {
         // static init
-    }
-
-    @SubscribeEvent
-    private static void addEntries (RegisterEvent event) {
-        ITEM_REGISTRY.addEntries(event);
-        MATERIAL_REGISTRY.addEntries(event);
     }
 
     @SubscribeEvent

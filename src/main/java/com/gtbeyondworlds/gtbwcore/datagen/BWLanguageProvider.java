@@ -5,6 +5,7 @@ import com.gtbeyondworlds.gtbwcore.api.material.BWMaterials;
 import com.gtbeyondworlds.gtbwcore.api.registry.BWRegistries;
 import com.gtbeyondworlds.gtbwcore.common.material.BWMaterial;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class BWLanguageProvider extends LanguageProvider {
@@ -15,8 +16,13 @@ public class BWLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         this.addItemTranslations();
-
         this.addMaterialTranslations();
+
+        this.addGuiTranslations();
+    }
+
+    private void addGuiTranslations() {
+        this.addCreativeTab("materials", "BW Materials");
     }
 
     private void addItemTranslations() {
@@ -30,6 +36,10 @@ public class BWLanguageProvider extends LanguageProvider {
     private void addMaterialTranslations() {
         this.addMaterial(BWMaterials.TIN, "Tin");
         this.addMaterial(BWMaterials.BRONZE, "Bronze");
+    }
+
+    private void addCreativeTab(String tabName, String name) {
+        this.addEntry("itemGroup", tabName, name);
     }
 
     private void addMaterial(BWMaterial material, String name) {

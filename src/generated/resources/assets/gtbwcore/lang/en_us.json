@@ -3,6 +3,7 @@
   "item.gtbwcore.dust_small": "Small Pile of %s Dust",
   "item.gtbwcore.dust_tiny": "Tiny Pile of %s Dust",
   "item.gtbwcore.ingot": "%s Ingot",
+  "itemGroup.gtbwcore.materials": "BW Materials",
   "material.gtbwcore.bronze": "Bronze",
   "material.gtbwcore.tin": "Tin"
 }

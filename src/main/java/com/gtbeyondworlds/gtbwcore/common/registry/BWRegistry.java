@@ -2,37 +2,54 @@ package com.gtbeyondworlds.gtbwcore.common.registry;
 
 import com.google.common.collect.ImmutableSet;
 import com.gtbeyondworlds.gtbwcore.GtbwCore;
+import lombok.Getter;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@EventBusSubscriber(modid = GtbwCore.MOD_ID)
 public class BWRegistry<T> {
+    private static final Set<BWRegistry<?>> REGISTRIES = new HashSet<>();
+
     private final Map<ResourceKey<T>, Supplier<T>> deferredEntries = new LinkedHashMap<>();
     private final Map<ResourceKey<T>, T> entries = new LinkedHashMap<>();
 
+    @Getter
     private final ResourceKey<? extends Registry<T>> registryKey;
 
     private boolean hasRegistered = false;
     private final String namespace;
 
-    public BWRegistry(String namespace, ResourceKey<? extends Registry<T>> registryKey) {
+    public BWRegistry(String namespace, ResourceKey<? extends Registry<T>> registryKey, boolean registerManually) {
+        if (!registerManually) {
+            REGISTRIES.add(this);
+        }
+
         this.registryKey = Objects.requireNonNull(registryKey);
         this.namespace = Objects.requireNonNull(namespace);
     }
 
+    public BWRegistry(String namespace, ResourceKey<? extends Registry<T>> registryKey) {
+        this(namespace, registryKey, false);
+    }
+
+    public BWRegistry(ResourceKey<? extends Registry<T>> registryKey, boolean registerManually) {
+        this(GtbwCore.MOD_ID, registryKey, registerManually);
+    }
+
     public BWRegistry(ResourceKey<? extends Registry<T>> registryKey) {
-        this(GtbwCore.MOD_ID, registryKey);
+        this(GtbwCore.MOD_ID, registryKey, false);
     }
 
     public T register(final String name, T obj) {
@@ -73,6 +90,13 @@ public class BWRegistry<T> {
 
         if (deferredEntries.putIfAbsent(key, sup) != null) {
             throw new IllegalArgumentException("Duplicate registration " + key);
+        }
+    }
+
+    @SubscribeEvent
+    private static void autoRegisterEntries (RegisterEvent event) {
+        for (BWRegistry<?> registry : REGISTRIES) {
+            registry.addEntries(event);
         }
     }
 
@@ -152,5 +176,10 @@ public class BWRegistry<T> {
         }
 
         return this.entries.get(key);
+    }
+
+    @Override
+    public String toString() {
+        return "BWRegistry[" + this.registryKey + "]";
     }
 }
